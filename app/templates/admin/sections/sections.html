@@ -1,0 +1,92 @@
+<!-- app/templates/admin/users/users.html -->
+
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Sections{% endblock %}
+{% block body %}
+
+{% if 'list_section_sec' in secs %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <h1 style="text-align:center;">{{ view.module.name }}.{{ view.name }}</h1>
+        {% if sections %}
+          <hr class="intro-divider">
+          <div class="center">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th width="15%"> Sections </th>
+                                    
+                  <!-- <th width="40%"> Description </th> -->
+                  <!-- <th width="15%"> Users</th> -->
+                  <th width="15%"> Edit </th>
+                  <th width="15%"> Delete </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for section in sections %}
+                <tr>
+                  <td> {{ section.name }} </td>
+                 
+                  <td>
+
+                  {% if secs['list_section_sec']|int in [1,3] %}
+
+                    <a href="{{ url_for('admin.edit_section', id=section.id) }}">
+                      <i class="fa fa-pencil-alt"></i>  
+                    </a>
+
+                  {% else %}
+                      <i class="fa fa-pencil-alt" title="You require elevated privilege to execute this command."></i>
+                  {% endif %}
+
+                  </td>
+                  <td>
+                  {% if secs['list_section_sec']|int in [2,3] %}
+
+                    <a href="{{ url_for('admin.delete_section', id=section.id) }}">
+                      <i class="fa fa-trash"></i>
+                    </a>
+
+                  {% else %}
+                      <i class="fa fa-trash" title="You require elevated privilege to execute this command."></i>
+                  {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div style="text-align: center">
+        {% else %}
+          <div style="text-align: center">
+            <h3> No sections have been added. </h3>
+            <hr class="intro-divider">
+        {% endif %}
+
+          {% if secs['list_section_sec']|int in [1,3] %}
+          <a href="{{ url_for('admin.add_section',view=view.id) }}" class="btn btn-default btn-lg">
+            <i class="fa fa-plus"></i>
+            Add Section
+          </a>
+          {% else %}
+            <a href="#" class="btn btn-disabled btn-lg" title="You require elevated privilege to execute this command.">
+              <i class="fa fa-plus"></i>
+              Add Section
+            </a>
+          {% endif %}
+
+          <a class="btn btn-warning" href="{{ url_for('admin.list_views',module=view.module_id) }}"> <i class="fas fa-angle-double-left"></i> BACK</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

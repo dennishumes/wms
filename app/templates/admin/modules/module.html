@@ -1,0 +1,32 @@
+<!-- app/templates/admin/users/user.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_module %}
+        Add Module
+    {% else %}
+        Edit Module
+    {% endif %}
+{% endblock %}
+{% block body %}
+{% if 'edit_module_sec' in secs %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            {% if add_module %}
+                <h1>Add Module</h1>
+            {% else %}
+                <h1>Edit Module</h1>
+            {% endif %}
+            <br/>
+            {{ wtf.quick_form(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

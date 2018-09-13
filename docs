@@ -1,0 +1,30 @@
+- Purpose -
+-- This document should give an understanding of how the access system works --
+
+- Overview -
+-- The Access system is implemented on Roles:Modules:Views:Sections --
+-- Sections are partitioned into different functons on the View -- 
+-- Example. The Users Module has the 'list_users' View --
+-- This View has the 'list_users_sec' Section --
+-- This section shows as a list of all users -- 
+-- An admin user can then Edit, Delete and Add users at will -- 
+-- The Edit, Delete and Add functions require different levels of permission --
+-- Example to Edit you need 'Read and Execute' permissions --
+-- To Delete and Add Users you need Execute Permission. 
+
+- Permissions - 
+-- Write -- To trigger Edit / Save functions. 
+-- Execute -- To trigger executable functions such as Add / Delete / Save / Print
+-- Write / Execute -- To trigger both Write and Execute functions 
+
+
+-- Modules -- 
+-- This should be defined in terms of the functions it performs --
+-- Example... the Users Module houses all user related operations --
+-- The Users Module has the 'list_users' and 'add_user' views --
+-- These views have the 'list_user_sec' and 'edit_user_sec' respectively --
+-- Authentication is done on Module:View and in the view templates on Section:permission --
+-- and all that is attached to a Role that is assigned to a user when being added --
+-- NB. That all Add and Edit functions uses the same views --
+-- Example the 'add_user' view is used by the edit_user view so we dont add views for the edit functions --
+

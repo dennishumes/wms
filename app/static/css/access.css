@@ -1,0 +1,50 @@
+.views_,.sections_ {
+	display:none;
+	margin-left: 30px;
+	padding-top: 1px;
+	padding-bottom: 5%;
+	border-bottom: 1px dashed #555;
+}
+
+
+.amodule,.aview,.asection {
+	cursor: pointer;
+	color: #555;
+	text-indent: 25px;
+	padding: 2%;
+	background: #ddd;
+	margin-left: 25px;
+
+}
+
+.amodule:hover,.aview:hover,.asection:hover {
+	color: #f5fb05;
+}
+
+#role_ {
+	text-indent: 25px;
+}
+
+.active {
+	display: block;
+}
+
+
+.highlight {
+	background: #eee;
+	color:#5ef522;
+	font-weight: bold;
+}
+
+.perms_ {
+	cursor: pointer;
+	color: #555;
+	text-indent: 25px;
+	padding: 2%;
+	background: #ddd;
+	margin-left: 25px;
+}
+
+.btn-disabled {
+	background: #555;
+}

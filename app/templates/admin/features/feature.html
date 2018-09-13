@@ -1,0 +1,33 @@
+<!-- app/templates/admin/features/feature.html -->
+<!-- app/templates/admin/views/view.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_feature %}
+        Add Feature
+    {% else %}
+        Edit Feature
+    {% endif %}
+{% endblock %}
+{% block body %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            {% if add_feature %}
+                <h1>Add Feature</h1>
+            {% else %}
+                <h1>Edit Feature</h1>
+            {% endif %}
+            <br/>
+            {{ wtf.quick_form(form) }}
+            <br>
+            <a class="btn btn-warning" href="{{ url_for('admin.list_features',section=section) }}">CANCEL</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

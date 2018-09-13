@@ -1,0 +1,37 @@
+<!-- app/templates/admin/users/user.html -->
+{% import "bootstrap/utils.html" as utils %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_bin %}
+        Add Bin
+    {% else %}
+        Edit Bin
+    {% endif %}
+{% endblock %}
+{% block body %}
+{% if 'edit_bin_sec' in secs %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <div class="center">
+            {% if add_bin %}
+                <h1>Add Bin <button id="add_multi_bins" class="btn btn-info">MULTIPLE</button></h1>
+            {% else %}
+                <h1>Edit Bin</h1>
+            {% endif %}
+            <br/>
+            {{ wtf.quick_form(form) }}
+            <br>
+            <a class="btn btn-warning" href="{{ url_for('admin.list_bins',warehouse=warehouse) }}">BACK</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

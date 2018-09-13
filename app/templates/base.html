@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="{{ url_for('static', filename='css/fontawesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fanimation.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/access.css') }}" rel="stylesheet">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <script language="javascript" src="{{ url_for('static', filename='src/jquery.js') }}" > </script>
+    <script language="javascript" src="{{ url_for('static', filename='src/bootstrap.js') }}" > </script>
+    <script language="javascript" src="{{ url_for('static', filename='src/helpers_.js') }}" > </script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand topnav" href="{{ url_for('home.homepage') }}"> Expedite ( WMS ) - Home </a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+              {% if current_user.is_admin %}
+                <li><a href="{{ url_for('home.admin_dashboard') }}">Dashboard</a></li>
+
+                {% if current_user.role.access %}
+                  {% for access in current_user.role.access %}
+                    {% if access.views.name[:4] == 'list' and access.module.name not in ['Sections','Views','Bins'] %}
+                      <li><a href="{{ url_for('admin.%s'% access.views.name ) }}"> {{ access.module.name }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+
+
+              {% else %}
+                <li><a href="{{ url_for('home.dashboard') }}">Dashboard</a></li>
+
+                {% if current_user.role.access %}
+                  {% for access in current_user.role.access %}
+                    {% if access.views.name[:4] == 'list' and access.module.name not in ['Sections','Views','Bins'] %}
+                      <li><a href="{{ url_for('admin.%s'% access.views.name ) }}"> {{ access.module.name }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+
+              {% endif %}
+                  <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                  <li><a><i class="fa fa-user"></i>  Hi, {{ current_user.username }}!</a></li>
+            {% else %}          
+                  <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            {% endif %}
+        </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="wrapper">
+      {% block body %}
+      {% endblock %}
+      <div class="push"></div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+         
+                    <p class="copyright text-muted small">Copyright © 2018. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>

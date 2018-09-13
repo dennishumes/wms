@@ -1,0 +1,46 @@
+<!-- app/templates/admin/users/user.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_user %}
+        Add User
+    {% else %}
+        Edit User
+    {% endif %}
+{% endblock %}
+{% block body %}
+
+{% if 'edit_user_sec' in secs %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            {% if add_user %}
+                <h1>Add User</h1>
+            {% else %}
+                <h1>Edit User</h1>
+            {% endif %}
+            <br/>
+            {{ wtf.quick_form(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+    <div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+        <h2>Oops!!!.</h2>
+            <h3>You do not have access to this view. Please contact admin for access.</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

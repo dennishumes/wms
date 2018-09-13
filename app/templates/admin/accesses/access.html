@@ -1,0 +1,130 @@
+<!-- app/templates/admin/accesses/access.html -->
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_access %}
+        Add Access
+    {% else %}
+        Edit Access
+    {% endif %}
+{% endblock %}
+{% block body %}
+
+{% if 'edit_access_sec' %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+       <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <div class="center">
+            {% if add_access %}
+                <h1>Add Access</h1>
+            {% else %}
+                <h1>Edit Access</h1>
+            {% endif %}
+            <br/>
+            <form action="" method="post" id="access_" role="form">
+
+            
+                <input type="hidden" name="module" id="module_selc" value={{ form.module if form.module else 0 }} >
+                <input type="hidden" name="view" id="view_selc" value={{ form.view if form.view else 0 }}>
+                <input type="hidden" name="section" id="section_selc" value={{ form.section if form.section else 0 }}>
+                <input type="hidden" name="permisson" id="permission_selc" value={{ form.permission if form.permission else 0 }}>
+
+            <h2 class="well">Roles</h2>
+
+            {% if Roles %}
+                {% for role in Roles %}
+                    {% if form.role and form.role == role.id %}
+                        <h4 id="role_"><span>{{ role.name }} <input type="radio" name="role" value="{{ role.id }}" checked></span>&nbsp;</h4>
+                    {% else %}
+                        <h4 id="role_"><span>{{ role.name }} <input type="radio" name="role" value="{{ role.id }}"></span>&nbsp;</h4>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <div style="text-align: center">
+                    <h3> No Roles to assign access. Log in as an Administrator to add Roles using the Roles Module. </h3>
+                    <hr class="intro-divider">
+                </div>
+            {% endif %}
+            <h2 class="well">Modules</h2>
+    
+            {% if Modules %}
+                {% if Modules.count() > 0 %}
+                    {% for module in Modules %}
+                        <h4 class="amodule" id="mod_{{ module.id }}" data="{{ module.id }}">{{ module.name }} </h4>
+                            <div class="views_" id="mod_{{ module.id }}">
+                                <h3 class="well">Views</h3>
+                                {% if module.views %}
+                                    {% if module.views.count() > 0%}
+                                        {% for view in module.views %}
+                                            <h4  class="aview" id="view_{{ view.id }}" data="{{ view.id }}">{{ view.name }}</h4>
+
+                                            <div class="sections_" id="view_{{ view.id }}">
+                                                <h4 class="well">Sections</h4>
+
+                                                {% if view.sections %}
+                                                    {% if view.sections.count() > 0%}
+                                                        {% for section in view.sections %}
+                                                            <h4 class="asection" id="section_{{ section.id }}" data="{{ section.id }}">{{ section.name }}</h4>
+
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <div style="text-align: center">
+                                                            <h5> No Section to assign access. Log in as an Administrator to add Section using the Sections Module. </h5>
+                                                            
+                                                        </div>
+                                                    {% endif %}                                           
+                                                {% endif %}
+                                            </div>
+
+                                        {% endfor %}
+                                    {% else %}
+                                        <div style="text-align: center">
+                                            <h5> No Modules to assign access. Log in as an Administrator to add Modules using the Roles Module. </h5>
+                                            
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+
+                            </div>
+
+                    {% endfor %}
+
+                   <br>
+                        <br>
+                {% else %}
+                    <div style="text-align: center">
+                        <h5> No Modules to assign access. Log in as an Administrator to add Modules using the Roles Module. </h5>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <br>
+                
+                <div class="well">
+                    <h3>Permissions</h3>
+                    <span class="perms_">
+                        <span>Write <input type="radio" name="permission" value=1></span>&nbsp;|&nbsp;&nbsp;|&nbsp;
+                        <span>Execute <input type="radio" name="permission" value=2></span>&nbsp;|&nbsp;&nbsp;|&nbsp;
+                        <span>Write / Execute <input type="radio" name="permission" value=3></span>
+                    </span>
+                </div>
+
+                {% if secs['edit_access_sec']| in [1,3] %}
+                    <input id="submit" name="submit" type="submit" value="SAVE" class="btn btn-success">
+                {% else %}
+                    <input id="submit" type="submit" value="SAVE" class="btn btn-disabled" title="You require elevated privilege to execute this command." disabled>
+                {% endif %}
+            <a class="btn btn-warning" href="{{ url_for('admin.list_accesses') }}"> CANCEL</a>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
