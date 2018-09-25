@@ -71,7 +71,7 @@ def addMultiBins(form,wh):
     if bins:
         for bin_ in bins:
             isBin = Bin.query.filter_by(name=bin_).first()
-            if isBin is None;
+            if isBin is None:
                 abin = Bin(name=bin_,depth=form.depth.data,warehouse_id=wh)
                 bins_.append(abin)
 
